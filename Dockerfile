@@ -11,15 +11,7 @@ RUN dotnet publish -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
-
-ARG UID=1000
-ARG GID=1000
-
-RUN groupadd --gid ${GID} buildadmin \
-    && useradd --uid ${UID} --gid buildadmin --shell /bin/bash --create-home buildadmin
-
 WORKDIR /app
 COPY --from=build-env /app/out .
 RUN chown buildadmin:buildadmin /app /app/* 
-USER buildadmin
 ENTRYPOINT ["dotnet", "SecureApp.dll"]
