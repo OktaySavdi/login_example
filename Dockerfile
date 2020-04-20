@@ -13,4 +13,7 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR /app
 COPY --from=build-env /app/out .
+RUN adduser -D buildadmin
+RUN chown buildadmin:buildadmin /app /app/* 
+USER buildadmin
 ENTRYPOINT ["dotnet", "SecureApp.dll"]
