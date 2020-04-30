@@ -21,7 +21,6 @@ RUN groupadd --gid ${GID} buildadmin \
 WORKDIR /app
 COPY --from=build-env /app/out .
 
-RUN chown -R buildadmin:buildadmin /local/* 
 RUN chown -R buildadmin:buildadmin /app/* 
 
 USER buildadmin
